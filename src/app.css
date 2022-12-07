@@ -1,0 +1,9 @@
+body, #text {
+  background-color: black;
+  color: rgb(0, 255, 0);
+}
+
+#text {
+  border: 0;
+  size: 100;
+}
