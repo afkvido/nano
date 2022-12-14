@@ -2,7 +2,7 @@
   import "./footer.css";
 
 
-  let FooterText = "[^S] Save \t [^Q] Quit";
+  let FooterText = "[^s] Save \t [^q] Quit";
   let FooterEditable = false;
 
 </script>

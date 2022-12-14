@@ -2,24 +2,22 @@
     import save from "./save";
 
 
+    let state : "write" | "script" | "save" = "write";
+    let Cache : string = getCache();
+    let lastKey : string = "";
 
-    let Cache : string = fromCache();
-
-    function fromCache () : string {
-        return localStorage.getItem("nano-text") || "null";
+    function updateKey (ev : KeyboardEvent) {
+        lastKey = ev.key;
     }
 
-    function updateCache () {
-        if (Cache.includes("^q")) {
-            Cache = clearCache();
-        } else if (Cache.includes("^s")) {
-            save("filename.txt", Cache);
-            Cache = Cache.replace("^s", "");
-        }
 
-        
-        else
-            localStorage.setItem("nano-text", Cache);
+    function getCache () : string {
+        return localStorage.getItem("nano-text") || " ";
+    }
+
+    function setCache (value : string) : void {
+        if (state === "write") 
+        return localStorage.setItem("nano-text", value);
     }
 
     function clearCache () : string {
@@ -27,7 +25,19 @@
         return "";
     }
 
+    function updateCache () {
+        if (Cache.includes("^q")) {
+            Cache = clearCache();
 
+        } else if (Cache.includes("^s")) {
+            Cache = Cache.replace("^s", "");
+            save(prompt("File name to write: "), Cache);
+        }
+
+        
+        else
+            setCache(Cache);
+    }
 
 </script>
 
@@ -37,4 +47,6 @@
     contenteditable="true"
     bind:innerHTML={Cache}
     on:input={updateCache}
+    on:keydown={updateKey}
 >{Cache}</pre>
+
