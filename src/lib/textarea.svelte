@@ -1,14 +1,23 @@
 <script lang="ts">
-    import { keyboard } from "./keyboard";
+
+    let Text : string = fromCache();
+
+    function fromCache () : string {
+        return localStorage.getItem("nano-text") || "null";
+    }
+
+    function updateCache () {
+        localStorage.setItem("nano-text", Text)
+    }
 
 
-    export let content : string;
+
 </script>
 
 
 <pre
     id="text"
     contenteditable="true"
-    bind:innerHTML={content}
-    on:keydown={keyboard}
-/>
+    bind:innerHTML={Text}
+    on:input={updateCache}
+>{Text}</pre>
