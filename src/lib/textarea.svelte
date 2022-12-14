@@ -1,13 +1,13 @@
 <script lang="ts">
 
-    let Text : string = fromCache();
+    let Cache : string = fromCache();
 
     function fromCache () : string {
         return localStorage.getItem("nano-text") || "null";
     }
 
     function updateCache () {
-        localStorage.setItem("nano-text", Text)
+        localStorage.setItem("nano-text", Cache)
     }
 
 
@@ -18,6 +18,6 @@
 <pre
     id="text"
     contenteditable="true"
-    bind:innerHTML={Text}
+    bind:innerHTML={Cache}
     on:input={updateCache}
->{Text}</pre>
+>{Cache}</pre>
