@@ -1,4 +1,7 @@
 <script lang="ts">
+    import save from "./save";
+
+
 
     let Cache : string = fromCache();
 
@@ -7,7 +10,21 @@
     }
 
     function updateCache () {
-        localStorage.setItem("nano-text", Cache)
+        if (Cache.includes("^q")) {
+            Cache = clearCache();
+        } else if (Cache.includes("^s")) {
+            save("filename.txt", Cache);
+            Cache = Cache.replace("^s", "");
+        }
+
+        
+        else
+            localStorage.setItem("nano-text", Cache);
+    }
+
+    function clearCache () : string {
+        localStorage.removeItem("nano-text");
+        return "";
     }
 
 
