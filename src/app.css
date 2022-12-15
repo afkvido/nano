@@ -1,9 +1,14 @@
 body, #text {
   background-color: black;
   color: rgb(0, 255, 0);
+  resize: none;
 }
 
 #text {
   border: 0;
-  size: 100;
+  outline: 0;
+  width: 100%;
+  max-width: 100%;
+  max-height: fit-content;
+  height: 70vh;
 }

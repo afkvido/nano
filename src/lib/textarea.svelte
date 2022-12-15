@@ -46,7 +46,7 @@
 </script>
 
 
-{#if (state !== "save")}
+{#if (state === "save")}
 <pre>
     [^q] to cancel.
     File name to write:
@@ -54,12 +54,12 @@
 {/if}
 
 
-<pre
+<textarea
     id="text"
     contenteditable="true"
-    bind:textContent={Cache}
+    bind:value={Cache}
     on:input={update}
     on:keydown={ev => { lastKey = ev.key }}
->{Cache}</pre>
+/>
 
 
