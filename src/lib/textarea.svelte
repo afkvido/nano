@@ -3,11 +3,7 @@
 
     let state : "write" | "script" | "save" = "write";
     let Cache : string = getCache();
-    let lastKey : string = "";
-
-    function updateKey (ev : KeyboardEvent) {
-        lastKey = ev.key;
-    }
+    let lastKey : string;
 
     function getCache () : string {
         return localStorage.getItem("nano-text") || " ";
@@ -24,28 +20,37 @@
     }
 
     function update () {
-        if (Cache.includes("^q")) {
+
+        if (state === "save" && lastKey === "Enter") {
+            save(Cache.replace("\n", ""), getCache());
+            state = "write";
+            Cache = getCache();
+
+        } else if (state === "write" && Cache.includes("^q")) {
             Cache = clearCache();
 
-        } else if (Cache.includes("^s")) {
-            Cache = Cache.replace("^s", "");
-            save(prompt("File name to write: "), Cache);
-        }
+        } else if (state === "write" && Cache.includes("^s")) {
+            setCache(Cache.replace("^s", ""));
+            state = "save";
+            Cache = "";
 
-        
-        else
+        } else if (state === "write") {
             setCache(Cache);
+        }
     }
 
 </script>
 
+<pre
+    style="{(state === "save") ? "" : "display:none"}"
+>File name to write:</pre>
 
 <pre
     id="text"
     contenteditable="true"
     bind:textContent={Cache}
     on:input={update}
-    on:keydown={updateKey}
+    on:keydown={ev => { lastKey = ev.key }}
 >{Cache}</pre>
 
 
