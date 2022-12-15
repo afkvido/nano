@@ -26,6 +26,10 @@
             state = "write";
             Cache = getCache();
 
+        } else if (state === "save" && Cache.includes("^q")) {
+            state = "write";
+            Cache = getCache();
+
         } else if (state === "write" && Cache.includes("^q")) {
             Cache = clearCache();
 
@@ -41,9 +45,14 @@
 
 </script>
 
-<pre
-    style="{(state === "save") ? "" : "display:none"}"
->File name to write:</pre>
+
+{#if (state !== "save")}
+<pre>
+    [^q] to cancel.
+    File name to write:
+</pre>
+{/if}
+
 
 <pre
     id="text"
