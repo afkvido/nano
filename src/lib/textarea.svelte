@@ -6,7 +6,7 @@
     let lastKey : string;
 
     function getCache () : string {
-        return localStorage.getItem("nano-text") || " ";
+        return localStorage.getItem("nano-text") || "";
     }
 
     async function setCache (value : string) {
