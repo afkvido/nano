@@ -3,7 +3,6 @@
 
     let state : "write" | "script" | "save" = "write";
     let Cache : string = getCache();
-    let lastKey : string;
 
     function getCache () : string {
         return localStorage.getItem("nano-text") || "";
@@ -21,19 +20,19 @@
 
     function update () {
 
-        if (state === "save" && lastKey === "Enter") {
+        if (state === "save" && Cache.endsWith("\n")) {
             save(Cache.replace("\n", ""), getCache());
             state = "write";
             Cache = getCache();
 
-        } else if (state === "save" && Cache.includes("^q")) {
+        } else if (state === "save" && Cache.endsWith("^q")) {
             state = "write";
             Cache = getCache();
 
-        } else if (state === "write" && Cache.includes("^q")) {
+        } else if (state === "write" && Cache.endsWith("^q")) {
             Cache = clearCache();
 
-        } else if (state === "write" && Cache.includes("^s")) {
+        } else if (state === "write" && Cache.endsWith("^s")) {
             setCache(Cache.replace("^s", ""));
             state = "save";
             Cache = "";
@@ -59,7 +58,6 @@
     contenteditable="true"
     bind:value={Cache}
     on:input={update}
-    on:keydown={ev => { lastKey = ev.key }}
 />
 
 
