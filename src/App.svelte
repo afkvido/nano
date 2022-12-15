@@ -4,9 +4,12 @@
   import Header from "./lib/header/header.svelte";
   import Textarea from "./lib/textarea.svelte";
 
+  document.addEventListener("keydown", event => {
+    document.getElementById('text').focus();
+  });
 </script>
 
-<main id="main" on:keydown={() => {document.getElementById("text").focus();}}>
+<main id="main">
   <Header/>
   
   <Textarea/>

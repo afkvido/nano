@@ -1,7 +1,6 @@
 <script lang="ts">
     import save from "./save";
 
-
     let state : "write" | "script" | "save" = "write";
     let Cache : string = getCache();
     let lastKey : string = "";
@@ -10,12 +9,11 @@
         lastKey = ev.key;
     }
 
-
     function getCache () : string {
         return localStorage.getItem("nano-text") || " ";
     }
 
-    function setCache (value : string) : void {
+    async function setCache (value : string) {
         if (state === "write") 
         return localStorage.setItem("nano-text", value);
     }
@@ -25,7 +23,7 @@
         return "";
     }
 
-    function updateCache () {
+    function update () {
         if (Cache.includes("^q")) {
             Cache = clearCache();
 
@@ -45,8 +43,9 @@
 <pre
     id="text"
     contenteditable="true"
-    bind:innerHTML={Cache}
-    on:input={updateCache}
+    bind:textContent={Cache}
+    on:input={update}
     on:keydown={updateKey}
 >{Cache}</pre>
+
 
