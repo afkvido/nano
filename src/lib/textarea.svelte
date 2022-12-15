@@ -10,8 +10,8 @@
     }
 
     async function setCache (value : string) {
-        if (state === "write") 
-        return localStorage.setItem("nano-text", value);
+        if (state === "write")
+        localStorage.setItem("nano-text", value);
     }
 
     function clearCache () : string {
