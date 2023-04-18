@@ -1,16 +1,17 @@
 <script lang="ts">
     import save from "./save";
 
+
     let state : "write" | "script" | "save" = "write";
     let Cache : string = getCache();
 
     function getCache () : string {
-        return localStorage.getItem("nano-text") || "";
+        return atob(localStorage.getItem("nano-text")) ?? "";
     }
 
     async function setCache (value : string) {
         if (state === "write")
-        localStorage.setItem("nano-text", value);
+        localStorage.setItem("nano-text", btoa(value));
     }
 
     function clearCache () : string {
